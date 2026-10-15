@@ -5,7 +5,7 @@ import type { CSSProperties } from 'react'
 export const SHOP = {
   name: 'The Barkber Grooming',
   logoUrl: '/logo.webp',
-  primaryColor: '#0f766e',
+  primaryColor: '#35506b',
   bookingSubtitle: 'Πες μας λίγα λόγια για το κατοικίδιό σου, για να δεις σωστή τιμή και διάρκεια.',
   // Words for the staff on customer and admin pages, so a copy for another
   // kind of business changes them here.
@@ -15,10 +15,10 @@ export const SHOP = {
     anyStaff: 'Όλοι οι groomers',
   },
   // Shown on the privacy policy and booking terms pages.
-  address: 'Λεωφόρος Παραδείγματος 10, Αθήνα',
+  address: 'Αγωνιστών Στρατοπέδου Χαϊδαρίου 44, Χαϊδάρι 124 61',
   phone: {
-    label: '+30 210 000 0000',
-    href: 'tel:+302100000000',
+    label: '210 581 1038',
+    href: 'tel:+302105811038',
   },
   // Social usernames without @, or null to hide the icon (top left of the
   // booking page).
@@ -35,22 +35,22 @@ export const SHOP = {
 } as const
 
 // Colours of the customer-facing pages (booking, manage, legal): the same
-// light mint as the admin, with white cards.
+// light blue-grey as the admin, with white cards.
 export const SITE_THEME = {
   '--brand': SHOP.primaryColor,
-  '--page-bg': '#f1f6f4',
-  '--page-border': '#d9e5e0',
+  '--page-bg': '#f2f5f8',
+  '--page-border': '#dbe2ea',
 } as CSSProperties
 
 // CSS custom properties for the admin UI (login and dashboard): a light beige
 // workspace with the shop's brand colour as the accent.
 export const ADMIN_THEME = {
-  '--admin-bg': '#f1f6f4',
+  '--admin-bg': '#f2f5f8',
   '--admin-surface': '#ffffff',
-  '--admin-surface-2': '#f7faf9',
-  '--admin-border': '#d9e5e0',
-  '--admin-text': '#15201c',
-  '--admin-muted': '#62716b',
+  '--admin-surface-2': '#f8fafc',
+  '--admin-border': '#dbe2ea',
+  '--admin-text': '#16202a',
+  '--admin-muted': '#5f6b78',
   '--admin-accent': SHOP.primaryColor,
   '--admin-accent-hover': `color-mix(in srgb, ${SHOP.primaryColor} 82%, black)`,
   '--admin-accent-soft': `color-mix(in srgb, ${SHOP.primaryColor} 9%, white)`,

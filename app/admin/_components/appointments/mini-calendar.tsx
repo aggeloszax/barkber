@@ -63,8 +63,8 @@ export function MiniCalendar({
                   : isToday
                     ? 'font-semibold text-[var(--admin-accent)] ring-1 ring-inset ring-[var(--admin-accent)]'
                     : inMonth
-                      ? 'text-[var(--admin-text)] hover:bg-[#e5efeb]'
-                      : 'text-[#c4b8a8] hover:bg-[#e5efeb]'
+                      ? 'text-[var(--admin-text)] hover:bg-[#e6ecf2]'
+                      : 'text-[#c4b8a8] hover:bg-[#e6ecf2]'
               }`}
             >
               {Number(dateKey.slice(8))}

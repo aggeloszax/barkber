@@ -191,9 +191,9 @@ function customerBookingEmailHtml({
   const brandColor = SHOP.primaryColor
   // Inline colours only: email clients ignore stylesheets and CSS variables.
   return `
-<div style="background: #f1f6f4; padding: 24px 12px;">
-<section style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; background: #ffffff; color: #15201c; border: 1px solid #d9e5e0; border-radius: 18px; overflow: hidden;">
-  <div style="padding: 28px; border-bottom: 1px solid #d9e5e0;">
+<div style="background: #f2f5f8; padding: 24px 12px;">
+<section style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; background: #ffffff; color: #16202a; border: 1px solid #dbe2ea; border-radius: 18px; overflow: hidden;">
+  <div style="padding: 28px; border-bottom: 1px solid #dbe2ea;">
     <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 0 18px; border-collapse: collapse;">
       <tr>
         <td style="padding-right: 12px; vertical-align: middle;">
@@ -207,24 +207,24 @@ function customerBookingEmailHtml({
     <h1 style="margin: 0; font-size: 24px; line-height: 1.25;">${heading}</h1>
   </div>
   <div style="padding: 28px;">
-    <p style="margin: 0 0 20px; color: #3b4843; line-height: 1.6;">${intro}</p>
+    <p style="margin: 0 0 20px; color: #3c4652; line-height: 1.6;">${intro}</p>
     <dl style="margin: 0; display: grid; gap: 12px;">
-      ${petName ? `<div><dt style="color: #62716b; font-size: 13px;">Κατοικίδιο</dt><dd style="margin: 4px 0 0; font-weight: 700;">${petName}</dd></div>` : ''}
-      <div><dt style="color: #62716b; font-size: 13px;">Υπηρεσία</dt><dd style="margin: 4px 0 0; font-weight: 700;">${serviceName}</dd></div>
-      <div><dt style="color: #62716b; font-size: 13px;">Groomer</dt><dd style="margin: 4px 0 0; font-weight: 700;">${barberName}</dd></div>
-      <div><dt style="color: #62716b; font-size: 13px;">Ημερομηνία</dt><dd style="margin: 4px 0 0; font-weight: 700;">${emailDate}</dd></div>
-      <div><dt style="color: #62716b; font-size: 13px;">Ώρα</dt><dd style="margin: 4px 0 0; font-weight: 700;">${emailTime}</dd></div>
-      <div><dt style="color: #62716b; font-size: 13px;">Διεύθυνση</dt><dd style="margin: 4px 0 0; font-weight: 700;">${escapeHtml(SHOP.address)}</dd></div>
+      ${petName ? `<div><dt style="color: #5f6b78; font-size: 13px;">Κατοικίδιο</dt><dd style="margin: 4px 0 0; font-weight: 700;">${petName}</dd></div>` : ''}
+      <div><dt style="color: #5f6b78; font-size: 13px;">Υπηρεσία</dt><dd style="margin: 4px 0 0; font-weight: 700;">${serviceName}</dd></div>
+      <div><dt style="color: #5f6b78; font-size: 13px;">Groomer</dt><dd style="margin: 4px 0 0; font-weight: 700;">${barberName}</dd></div>
+      <div><dt style="color: #5f6b78; font-size: 13px;">Ημερομηνία</dt><dd style="margin: 4px 0 0; font-weight: 700;">${emailDate}</dd></div>
+      <div><dt style="color: #5f6b78; font-size: 13px;">Ώρα</dt><dd style="margin: 4px 0 0; font-weight: 700;">${emailTime}</dd></div>
+      <div><dt style="color: #5f6b78; font-size: 13px;">Διεύθυνση</dt><dd style="margin: 4px 0 0; font-weight: 700;">${escapeHtml(SHOP.address)}</dd></div>
     </dl>
-    <p style="margin: 22px 0 0; font-size: 13px; color: #62716b;">
+    <p style="margin: 22px 0 0; font-size: 13px; color: #5f6b78;">
       Προσθήκη στο ημερολόγιο:
       <a href="${escapeHtml(googleCalendarUrl)}" style="color: ${brandColor}; font-weight: 700;">Google</a>
       &nbsp;·&nbsp;
       <a href="${escapeHtml(icsUrl)}" style="color: ${brandColor}; font-weight: 700;">iPhone / Outlook</a>
     </p>
   </div>
-  <div style="padding: 24px 28px; border-top: 1px solid #d9e5e0; background: #f7faf9; text-align: center;">
-    <p style="margin: 0 0 14px; color: #62716b; font-size: 13px; line-height: 1.6;">Θέλεις άλλη ώρα ή δεν μπορείς να έρθεις; Άλλαξε ή ακύρωσε το ραντεβού έως και 2,5 ώρες πριν.</p>
+  <div style="padding: 24px 28px; border-top: 1px solid #dbe2ea; background: #f8fafc; text-align: center;">
+    <p style="margin: 0 0 14px; color: #5f6b78; font-size: 13px; line-height: 1.6;">Θέλεις άλλη ώρα ή δεν μπορείς να έρθεις; Άλλαξε ή ακύρωσε το ραντεβού έως και 2,5 ώρες πριν.</p>
     <a href="${cancelUrl}" style="display: inline-block; padding: 12px 26px; border-radius: 999px; background: ${brandColor}; color: #ffffff; font-size: 14px; font-weight: 700; text-decoration: none;">Αλλαγή ή ακύρωση</a>
   </div>
 </section>
