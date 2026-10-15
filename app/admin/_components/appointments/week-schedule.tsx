@@ -166,7 +166,7 @@ export function WeekSchedule({
                 key={day}
                 className={`relative border-l border-[var(--admin-border)] ${
                   open.length === 0
-                    ? 'bg-[repeating-linear-gradient(135deg,#f9f5f7_0,#f9f5f7_6px,#f2eaee_6px,#f2eaee_12px)]'
+                    ? 'bg-[repeating-linear-gradient(135deg,#f3f8f6_0,#f3f8f6_6px,#eaf2ef_6px,#eaf2ef_12px)]'
                     : 'bg-white'
                 }`}
                 style={{ height }}

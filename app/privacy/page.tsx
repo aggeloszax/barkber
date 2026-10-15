@@ -159,7 +159,7 @@ export default function PrivacyPage() {
           </section>
         </div>
 
-        <footer className="border-t border-[var(--page-border)] bg-[#fbf8fa] px-6 py-6 text-center sm:px-10">
+        <footer className="border-t border-[var(--page-border)] bg-[#f7faf9] px-6 py-6 text-center sm:px-10">
           <Link
             href="/"
             className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white transition hover:brightness-110"

@@ -140,7 +140,7 @@ const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
     'bg-[var(--admin-accent)] text-white shadow-sm hover:bg-[var(--admin-accent-hover)]',
   secondary:
     'border border-[var(--admin-border)] bg-white text-[var(--admin-text)] hover:bg-[var(--admin-surface-2)]',
-  ghost: 'text-[var(--admin-muted)] hover:bg-[#f0e6eb] hover:text-[var(--admin-text)]',
+  ghost: 'text-[var(--admin-muted)] hover:bg-[#e5efeb] hover:text-[var(--admin-text)]',
   danger: 'border border-red-200 bg-white text-red-700 hover:bg-red-50',
 }
 
@@ -174,7 +174,7 @@ export function IconButton({
       aria-label={label}
       title={label}
       {...props}
-      className={`inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--admin-muted)] transition-colors hover:bg-[#f0e6eb] hover:text-[var(--admin-text)] disabled:opacity-50 ${className}`}
+      className={`inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--admin-muted)] transition-colors hover:bg-[#e5efeb] hover:text-[var(--admin-text)] disabled:opacity-50 ${className}`}
     />
   )
 }
@@ -227,7 +227,7 @@ export function ConfirmButton({
 /* ---------------------------------- Forms --------------------------------- */
 
 const FIELD_CLASS =
-  'mt-1.5 h-10 w-full rounded-xl border border-[var(--admin-border)] bg-white px-3 text-sm text-[var(--admin-text)] outline-none transition placeholder:text-[#ad9fa6] focus:border-[var(--admin-accent)] focus:ring-2 focus:ring-[var(--admin-accent-soft)] disabled:bg-[var(--admin-surface-2)] disabled:text-[var(--admin-muted)]'
+  'mt-1.5 h-10 w-full rounded-xl border border-[var(--admin-border)] bg-white px-3 text-sm text-[var(--admin-text)] outline-none transition placeholder:text-[#9aaba4] focus:border-[var(--admin-accent)] focus:ring-2 focus:ring-[var(--admin-accent-soft)] disabled:bg-[var(--admin-surface-2)] disabled:text-[var(--admin-muted)]'
 
 export function Field({
   label,
@@ -416,7 +416,7 @@ export function Avatar({
 
   return (
     <span
-      className="relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#ebe0e5] font-semibold text-[#6b5d4f]"
+      className="relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#dde8e3] font-semibold text-[#6b5d4f]"
       style={{ width: size, height: size, fontSize: size * 0.38 }}
     >
       {image && !failed ? (

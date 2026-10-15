@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Elli's Pet Grooming · Κλείσε ραντεβού",
+  title: "The Barkber Grooming · Κλείσε ραντεβού",
   description: "Online ραντεβού για grooming σκύλων και γατών.",
 };
 
