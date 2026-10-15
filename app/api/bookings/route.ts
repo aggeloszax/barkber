@@ -54,6 +54,9 @@ type PetInput = {
   temperament: Temperament | null
   healthNotes: string | null
   vaccinated: boolean
+  // Optional fields the request actually sent. An existing pet keeps the
+  // rest, e.g. when the admin books by phone with name and size only.
+  sent: Array<'breed' | 'coat' | 'temperament' | 'healthNotes' | 'vaccinated'>
 }
 
 function optionalText(value: unknown, max: number): string | null | false {
@@ -81,6 +84,9 @@ function parsePet(value: unknown): PetInput | null {
     temperament: (raw.temperament as Temperament | undefined) ?? null,
     healthNotes,
     vaccinated: raw.vaccinated === true,
+    sent: (['breed', 'coat', 'temperament', 'healthNotes', 'vaccinated'] as const).filter(
+      (key) => raw[key] !== undefined,
+    ),
   }
 }
 
@@ -301,10 +307,20 @@ export async function POST(request: Request) {
             return null
           }
 
+          const { sent, ...petData } = pet
           const savedPet = existingPet
-            ? await tx.pet.update({ where: { id: existingPet.id }, data: pet, select: { id: true } })
+            ? await tx.pet.update({
+                where: { id: existingPet.id },
+                data: {
+                  name: petData.name,
+                  species: petData.species,
+                  size: petData.size,
+                  ...Object.fromEntries(sent.map((key) => [key, petData[key]])),
+                },
+                select: { id: true },
+              })
             : await tx.pet.create({
-                data: { ...pet, customerPhone: normalizedCustomerPhone },
+                data: { ...petData, customerPhone: normalizedCustomerPhone },
                 select: { id: true },
               })
 
