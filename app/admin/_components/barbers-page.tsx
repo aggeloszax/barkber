@@ -282,7 +282,7 @@ function BarberModal({
         <TextArea rows={2} maxLength={200} value={bio} onChange={(event) => setBio(event.target.value)} />
       </Field>
       <div className="flex items-center gap-4">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-[#dfe6ee]">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-[#dde8e3]">
           {preview && <Image src={preview} alt="" fill unoptimized sizes="80px" className="object-cover" />}
         </div>
         <label className="inline-flex h-10 cursor-pointer items-center rounded-xl border border-[var(--admin-border)] bg-white px-4 text-sm font-medium hover:bg-[var(--admin-surface-2)]">
