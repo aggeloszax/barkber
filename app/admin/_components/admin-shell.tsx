@@ -47,7 +47,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <form action={logout} className="absolute right-4 top-5 sm:right-6">
             <button
               type="submit"
-              className="inline-flex h-9 items-center gap-2 rounded-xl px-3 text-sm font-medium text-[var(--admin-muted)] transition-colors hover:bg-[#e5efeb] hover:text-[var(--admin-text)]"
+              className="inline-flex h-9 items-center gap-2 rounded-xl px-3 text-sm font-medium text-[var(--admin-muted)] transition-colors hover:bg-[#eee7da] hover:text-[var(--admin-text)]"
             >
               <LogoutIcon className="h-4 w-4" />
               <span className="hidden sm:inline">Αποσύνδεση</span>
