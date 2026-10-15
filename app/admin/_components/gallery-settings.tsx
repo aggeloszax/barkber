@@ -90,7 +90,7 @@ export function GallerySettings() {
         ) : (
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {photos.map((photo, index) => (
-              <div key={photo.id} className="group relative aspect-square overflow-hidden rounded-xl bg-[#dde8e3]">
+              <div key={photo.id} className="group relative aspect-square overflow-hidden rounded-xl bg-[#ebe0e5]">
                 <Image src={photo.url} alt="" fill unoptimized sizes="150px" className="object-cover" />
                 <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/60 to-transparent p-1">
                   <div className="flex">

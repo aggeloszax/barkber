@@ -1,5 +1,5 @@
 export const OPEN_HOUR = 9
-export const CLOSE_HOUR = 21
+export const CLOSE_HOUR = 17
 export const SLOT_MINUTES = 30
 
 // Booking with no preferred barber: the server assigns a free one.
@@ -29,15 +29,13 @@ export type WorkingPeriod = {
   endTime: string
 }
 
-// Default weekly hours for barbers without their own schedule: Tuesday to
-// Saturday, 09:00-21:00 (JavaScript dayOfWeek: Sunday=0).
-export const WORKING_PERIODS: WorkingPeriod[] = [2, 3, 4, 5, 6].map(
-  (dayOfWeek) => ({
-    dayOfWeek,
-    startTime: `${String(OPEN_HOUR).padStart(2, '0')}:00`,
-    endTime: `${String(CLOSE_HOUR).padStart(2, '0')}:00`,
-  }),
-)
+// Default weekly hours for groomers without their own schedule
+// (JavaScript dayOfWeek: Sunday=0). Monday to Friday 09:00-17:00,
+// Saturday 09:00-13:00, closed Sunday.
+export const WORKING_PERIODS: WorkingPeriod[] = [
+  ...[1, 2, 3, 4, 5].map((dayOfWeek) => ({ dayOfWeek, startTime: '09:00', endTime: '17:00' })),
+  { dayOfWeek: 6, startTime: '09:00', endTime: '13:00' },
+]
 
 export function toDateKey(date: Date) {
   const y = date.getFullYear()

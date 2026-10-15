@@ -323,9 +323,9 @@ export function DaySchedule({
                         minute % 60 === 0
                           ? 'border-t border-[var(--admin-border)]'
                           : minute % 30 === 0
-                            ? 'border-t border-dashed border-[#e5efeb]'
+                            ? 'border-t border-dashed border-[#f0e6eb]'
                             : ''
-                      } ${open ? 'bg-white hover:bg-[var(--admin-accent-soft)]/60' : 'bg-[repeating-linear-gradient(135deg,#f3f8f6_0,#f3f8f6_6px,#eaf2ef_6px,#eaf2ef_12px)] hover:bg-[#e5efeb]'}`}
+                      } ${open ? 'bg-white hover:bg-[var(--admin-accent-soft)]/60' : 'bg-[repeating-linear-gradient(135deg,#f9f5f7_0,#f9f5f7_6px,#f2eaee_6px,#f2eaee_12px)] hover:bg-[#f0e6eb]'}`}
                       style={{
                         top: (minute - rangeStart) * PX_PER_MINUTE,
                         height: CELL_MINUTES * PX_PER_MINUTE,
