@@ -1,0 +1,194 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Barber {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  image       String?   // Public URL: a static /barbers/... file or /api/barbers/{id}/image
+  imageData   Bytes?    // Uploaded photo bytes, served by /api/barbers/{id}/image
+  imageType   String?   // MIME type of imageData, e.g. image/jpeg
+  bio         String?   // Short intro shown on the booking page
+  // false: the barber follows the default WORKING_PERIODS (lib/schedule.ts).
+  // true: workingPeriods is the barber's own week (empty = never works).
+  customSchedule Boolean @default(false)
+  bookings    Booking[]
+  workingPeriods BarberWorkingPeriod[]
+  timeOff     TimeOff[]
+  pushSubscriptions PushSubscription[]
+}
+
+// One working interval of a barber's week; several per day model breaks.
+model BarberWorkingPeriod {
+  id        String @id @default(cuid())
+  barberId  String
+  dayOfWeek Int    // JavaScript day: Sunday = 0
+  startTime String // "HH:MM"
+  endTime   String // "HH:MM"
+  barber    Barber @relation(fields: [barberId], references: [id], onDelete: Cascade)
+
+  @@index([barberId])
+}
+
+// Days off for one barber, or the whole shop when barberId is null.
+model TimeOff {
+  id        String   @id @default(cuid())
+  barberId  String?
+  startDate String   // YYYY-MM-DD, inclusive
+  endDate   String   // YYYY-MM-DD, inclusive
+  reason    String?
+  createdAt DateTime @default(now())
+  barber    Barber?  @relation(fields: [barberId], references: [id], onDelete: Cascade)
+
+  @@index([endDate])
+}
+
+model Service {
+  id          String    @id @default(cuid())
+  name        String    @unique // e.g. "Πλήρες grooming"
+  duration    Int       // Base duration in minutes, used when a size has no own row
+  price       Float     // Base price ("από"), used when a size has no own row
+  description String?   // What the service includes, shown when booking
+  category    String?   // Groups services on the booking page, e.g. "Μπάνιο"
+  // "DOG", "CAT", or null when the service suits both.
+  species     String?
+  // Extra added on top of a main service (nails, teeth...), never booked alone.
+  isAddon     Boolean   @default(false)
+  // Price and duration per pet size, see SizePricing in lib/pets.ts.
+  sizePricing Json?
+  bookings    Booking[]
+}
+
+enum BookingStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+model ScheduleException {
+  id          String   @id @default(uuid())
+  date        DateTime // The specific day affected
+  barberName  String?  // If null, applies to the whole shop. Otherwise, specific barber.
+  type        String   // "BLOCK_SLOT" (blocks a specific hour) or "FORCE_OPEN" (opens a Monday) or "FORCE_CLOSE"
+  slotTime    String?  // e.g., "14:30" (only used if type is BLOCK_SLOT)
+  createdAt   DateTime @default(now())
+
+  @@index([date])
+}
+
+// Single row with id "admin" (see ADMIN_CREDENTIAL_ID in lib/admin-auth.ts).
+model AdminCredential {
+  id           String   @id @default("admin")
+  passwordHash String
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  cancelToken String   @unique @default(cuid())
+  createdAt   DateTime @default(now())
+  startTime   DateTime // Η ώρα έναρξης του ραντεβού
+  endTime     DateTime // Η ώρα λήξης (startTime + duration)
+  status      BookingStatus @default(PENDING)
+
+  // Στοιχεία Πελάτη
+  customerName  String
+  customerPhone String
+  customerEmail String?
+  noShow       Boolean @default(false)
+  notes        String?  // Optional comment the customer leaves when booking
+  reminderSentAt DateTime? // Day-before reminder email; cleared when the booking moves
+  // Total charged for the service plus add-ons, fixed at booking time.
+  price        Float    @default(0)
+  // Add-ons chosen with the booking, as [{ id, name, price, duration }].
+  addons       Json?
+  petId        String?
+  pet          Pet?     @relation(fields: [petId], references: [id], onDelete: SetNull)
+
+  // Σχέσεις
+  barberId    String
+  barber      Barber   @relation(fields: [barberId], references: [id])
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id])
+
+  @@index([startTime])
+  @@index([barberId, startTime])
+}
+
+// Shop-side profile of a customer, keyed by the normalized mobile number
+// that every booking stores. Name and email live on the bookings.
+model Customer {
+  phone         String   @id // +3069XXXXXXXX
+  notes         String?  // Private notes for the shop, e.g. preferences
+  blocked       Boolean  @default(false) // Cannot book online
+  blockedReason String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// A customer's pet, keyed to the owner by the normalized mobile number.
+// Online bookings update the pet with the same owner and name.
+model Pet {
+  id            String    @id @default(cuid())
+  customerPhone String    // +3069XXXXXXXX
+  name          String
+  species       String    // "DOG" | "CAT"
+  breed         String?
+  size          String    // "SMALL" | "MEDIUM" | "LARGE" | "XLARGE"
+  coat          String?   // see COAT_LABELS in lib/pets.ts
+  temperament   String?   // see TEMPERAMENT_LABELS in lib/pets.ts
+  healthNotes   String?   // Allergies, conditions, age-related care
+  vaccinated    Boolean   @default(false) // Owner declared vaccinations are current
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  bookings      Booking[]
+
+  @@index([customerPhone])
+}
+
+// Fixed-window request counters shared by every serverless instance.
+model RateLimit {
+  key     String   @id
+  count   Int
+  resetAt DateTime
+}
+
+// A phone or computer that receives push notifications about bookings.
+// barberId null: every barber's bookings; otherwise only that barber's.
+model PushSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  label     String?  // Device description, e.g. "iPhone"
+  barberId  String?
+  barber    Barber?  @relation(fields: [barberId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+// Small app-wide values generated at runtime, e.g. the web push keys.
+model AppSetting {
+  key   String @id
+  value String
+}
+
+// Photos of the shop shown on the booking page, served by
+// /api/gallery/{id}/image.
+model GalleryPhoto {
+  id        String   @id @default(cuid())
+  data      Bytes
+  type      String   // MIME type, e.g. image/jpeg
+  caption   String?
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+}
